@@ -1,1 +1,0 @@
-# kimsutto.github.io
