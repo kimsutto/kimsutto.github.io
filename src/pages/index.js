@@ -15,7 +15,39 @@ const IndexPage = () => (
       <Image />
     </div>
     <Link to="/page-2/">Go to page 2</Link>
+    <Link to="/test/">테스트</Link>
   </Layout>
 )
 
 export default IndexPage
+
+export const pageQuery = graphql
+  query {
+    site {
+      siteMetadata {
+        title
+        configs {
+          countOfInitialPost
+        }
+      }
+    }
+    allMarkdownRemark(
+      sort: { fields: [frontmatter___date], order: DESC }
+      filter: { frontmatter: { category: { ne: null }, draft: { eq: false } } }
+    ) {
+      edges {
+        node {
+          excerpt(pruneLength: 200, truncate: true)
+          fields {
+            slug
+          }
+          frontmatter {
+            date(formatString: "MMMM DD, YYYY")
+            title
+            category
+            draft
+          }
+        }
+      }
+    }
+  }
